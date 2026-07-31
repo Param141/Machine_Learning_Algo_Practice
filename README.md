@@ -37,7 +37,7 @@ This repository contains practical implementations and benchmark experiments for
 * **Language:** Python 3.x
 * **Data Manipulation & EDA:** Pandas, NumPy
 * **Data Visualization:** Matplotlib, Seaborn
-* **Machine Learning:** Scikit-Learn (`LinearRegression`, `LogisticRegression`, `SVC`, `StandardScaler`, `GridSearchCV`, `mean_squared_error`, `r2_score`)
+* **Machine Learning:** Scikit-Learn (`LinearRegression`, `LogisticRegression`, `SVC`, `StandardScaler`, `GridSearchCV`, `mean_squared_error`, `r2_score`,`confusion matrix`,`classification report`)
 
 ---
 
