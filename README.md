@@ -33,18 +33,48 @@ This repository contains practical implementations and benchmark experiments for
 
 ---
 
+📌 Project 3: Regression Benchmarks (Simple & Multiple Linear Regression)
+
+* **Datasets Used:** `Salary_Data.csv` (Simple) and `50_Startups.csv` (Multiple).
+* **Objectives:** 
+  * Predict salary based on years of experience (1D Linear Regression).
+  * Predict startup `Profit` based on operational spending (`R&D Spend`, `Administration`, `Marketing Spend`) and `State` location.
+* **Preprocessing & Feature Engineering:**
+  * Applied `StandardScaler` on numerical features after splitting data to prevent data leakage.
+  * Encoded categorical location (`State`) via One-Hot Encoding (`pd.get_dummies(drop_first=True)`), preventing the Dummy Variable Trap.
+  * Synchronized feature columns between train and test splits using `df.align(join='left', axis=1, fill_value=0)`.
+* **Model Evaluation & Key Findings:**
+  * **Simple Linear Regression:** Established baseline $y = mx + c$ relationship between experience and income.
+  * **Multiple Linear Regression:** Evaluated partial regression coefficients (`model.coef_`) to rank spending impact (`R&D Spend` emerged as the primary profit driver).
+  * **Low-Correlation Feature Impact:** Bivariate correlation showed `Administration` had only ~9% linear correlation with `Profit`, but model weights demonstrated its role as a control variable alongside R&D and Marketing spending.
+
+---
 ## 🛠️ Tech Stack & Libraries
 * **Language:** Python 3.x
 * **Data Manipulation & EDA:** Pandas, NumPy
 * **Data Visualization:** Matplotlib, Seaborn
 * **Machine Learning:** Scikit-Learn (`LinearRegression`, `LogisticRegression`, `SVC`, `StandardScaler`, `GridSearchCV`, `mean_squared_error`, `r2_score`,`confusion matrix`,`classification report`)
 
----
-
 ## 📁 Repository Structure
 ```text
-├── insurance.csv                           # Medical Cost Dataset
-├── Social_Network_Ads.csv                  # Social Network Ads Dataset
-├── MultipleLinearRegression.ipynb          # Notebook for Insurance Charges Regression
+├── 50_Startups.csv                         # Startups Expenditure & Profit Dataset
+├── Salary_Data.csv                         # Salary vs Experience Dataset
+├── Social_Network_Ads.csv                  # Social Network Ads Classification Dataset
+├── Simple_And_Multiple_Linear_Regression.ipynb # Notebook for Regression Experiments
 ├── Social_Network_Ads_Classification.ipynb # Notebook for Classification Experiments
 └── README.md                               # Project documentation
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
