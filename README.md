@@ -1,7 +1,3 @@
-Here is an updated **README.md** tailored for your GitHub repository. It expands on your existing content, integrating **Project 4** and **Project 5** with exact data attributes, preprocessing pipelines, model evaluation metrics, and hyperparameter results derived directly from your notebooks.
-
----
-
 # Machine Learning Supervised Learning Benchmarks
 
 This repository contains practical implementations and benchmark experiments for foundational Supervised Learning algorithms, ranging from basic regression and classification to end-to-end data pipelines, hyperparameter tuning, and ensemble modeling.
@@ -52,7 +48,7 @@ This repository contains practical implementations and benchmark experiments for
 **Objectives:**
 
 * Predict salary based on years of experience (1D Linear Regression).
-* Predict startup Profit based on operational spending (`R&D Spend`, `Administration`, `Marketing Spend`) and `State` location.
+* Predict startup `Profit` based on operational spending (`R&D Spend`, `Administration`, `Marketing Spend`) and `State` location.
 
 **Preprocessing & Feature Engineering:**
 
@@ -64,7 +60,7 @@ This repository contains practical implementations and benchmark experiments for
 
 * **Simple Linear Regression:** Established baseline $y = mx + c$ relationship between experience and income.
 * **Multiple Linear Regression:** Evaluated partial regression coefficients (`model.coef_`) to rank spending impact (`R&D Spend` emerged as the primary profit driver).
-* **Low-Correlation Feature Impact:** Bivariate correlation showed `Administration` had only ~9% linear correlation with `Profit`, but model weights demonstrated its role as a control variable alongside `R&D` and `Marketing` spending.
+* **Low-Correlation Feature Impact:** Bivariate correlation showed `Administration` had only ~9% linear correlation with `Profit`, but model weights demonstrated its role as a control variable alongside R&D and Marketing spending.
 
 ---
 
@@ -76,10 +72,10 @@ This repository contains practical implementations and benchmark experiments for
 
 **Data Preprocessing & Feature Pipeline:**
 
-* **Feature Selection & Encoding:** Dropped high-cardinality/redundant string attributes (`car_name`, `brand`). Encoded high-cardinality `model` (120 unique models) using `LabelEncoder`. Applied `OneHotEncoder(drop='first')` across low-cardinality categorical features (`seller_type`, `fuel_type`, `transmission_type`).
+* **Feature Selection & Encoding:** Dropped high-cardinality/redundant string attributes (`car_name`, `brand`). Encoded `model` (120 unique models) using `LabelEncoder`. Applied `OneHotEncoder(drop='first')` across categorical features (`seller_type`, `fuel_type`, `transmission_type`).
 
 
-* **Feature Scaling:** Scaled continuous and discrete numerical columns (`vehicle_age`, `km_driven`, `mileage`, `engine`, `max_power`, `seats`, `model`) via `StandardScaler` inside a unified `ColumnTransformer` pipeline.
+* **Feature Scaling:** Scaled numerical columns (`vehicle_age`, `km_driven`, `mileage`, `engine`, `max_power`, `seats`, `model`) via `StandardScaler` inside a unified `ColumnTransformer` pipeline.
 
 
 * **Train/Test Split:** Evaluated performance using an 80/20 train-test split (12,328 train / 3,083 test samples).
@@ -88,19 +84,25 @@ This repository contains practical implementations and benchmark experiments for
 
 **Model Evaluation & Hyperparameter Tuning:**
 
-* **Linear / Ridge / Lasso Regression:** Baseline test $R^2 = 0.6645$ (Test RMSE: 502,543).
+* **Linear Regression / Lasso / Ridge:** Baseline Test $R^2 = 0.6645$ (Test RMSE: 502,543).
 
 
-* **K-Neighbors Regressor (Tuned $K=10$):** Test $R^2 = 0.9075$ (Test MAE: 117,483).
+* **K-Neighbors Regressor:** Test $R^2 = 0.9149$ (Test RMSE: 253,118).
 
 
-* **Decision Tree Regressor:** Test $R^2 = 0.8759$ (High overfit with Train $R^2 = 0.9995$).
+* **Decision Tree Regressor:** Test $R^2 = 0.8728$ (Overfitting observed with Train $R^2 = 0.9995$).
 
 
-* **AdaBoost Regressor:** Test $R^2 = 0.7284$.
+* **AdaBoost Regressor:** Test $R^2 = 0.5739$.
 
 
-* **Random Forest Regressor (Best Model):** Achieved **Test $R^2 = 0.9315$** (Test MAE: 102,202). Tuned via `RandomizedSearchCV` (`n_estimators=500`, `max_features=8`, `min_samples_split=2`). 🏆
+* **Gradient Boosting Regressor:** Test $R^2 = 0.9126$.
+
+
+* **Random Forest Regressor (Tuned):** Reached Test $R^2 = 0.9406$ (Test MAE: 98,281) via `RandomizedSearchCV` (`n_estimators=200`, `max_features=5`, `min_samples_split=2`).
+
+
+* **XGBoost Regressor (Best Model):** Achieved Test $R^2 = 0.9511$ (Test MAE: 96,118; Test RMSE: 191,852) fine-tuned via `RandomizedSearchCV` (`n_estimators=300`, `max_depth=5`, `learning_rate=0.1`, `colsample_bytree=0.5`) 🏆
 
 
 
@@ -114,13 +116,13 @@ This repository contains practical implementations and benchmark experiments for
 
 **Data Preprocessing & Feature Engineering:**
 
-* **Category Cleaning:** Standardized inconsistent labels (e.g., merged `'Fe Male'` into `'Female'`, `'Single'` into `'Unmarried'`).
+* **Category Cleaning:** Standardized inconsistent labels (merged `'Fe Male'` into `'Female'` and `'Single'` into `'Unmarried'`).
 
 
 * **Missing Value Imputation:** Imputed median values for continuous features (`Age`, `DurationOfPitch`, `NumberOfTrips`, `MonthlyIncome`) and mode values for categorical/discrete attributes (`TypeofContact`, `NumberOfFollowups`, `PreferredPropertyStar`, `NumberOfChildrenVisiting`).
 
 
-* **Feature Extraction:** Engineered composite interaction variable `TotalVisiting = NumberOfPersonVisiting + NumberOfChildrenVisiting`.
+* **Feature Extraction:** Engineered composite interaction variable `TotalVisiting = NumberOfPersonVisiting + NumberOfChildrenVisiting` and removed redundant component columns.
 
 
 * **Preprocessing Pipeline:** Integrated a unified `ColumnTransformer` combining `OneHotEncoder(drop='first')` across 6 categorical columns (`TypeofContact`, `Occupation`, `Gender`, `ProductPitched`, `MaritalStatus`, `Designation`) and `StandardScaler` across 11 numerical features.
@@ -132,17 +134,19 @@ This repository contains practical implementations and benchmark experiments for
 * **Logistic Regression:** Test Accuracy = 83.54%, Test ROC-AUC = 0.6301, Test Precision = 0.6829
 
 
-* **AdaBoost Classifier:** Test Accuracy = 83.64%, Test ROC-AUC = 0.6049
+* **AdaBoost Classifier:** Test Accuracy = 83.54%, Test ROC-AUC = 0.6400
 
 
 * **Gradient Boosting Classifier:** Test Accuracy = 85.89%, Test ROC-AUC = 0.6824
 
 
-* **Decision Tree Classifier:** Test Accuracy = 91.92%, Test ROC-AUC = 0.8606
+* **Decision Tree Classifier:** Test Accuracy = 91.92%, Test ROC-AUC = 0.8626
 
 
-* **Random Forest Classifier (Best Model):** Fine-tuned via `RandomizedSearchCV` (`n_estimators=1000`, `max_features=7`, `max_depth=None`), yielding **Test Accuracy = 93.56%**, **Test Precision = 0.9706**, and **Test ROC-AUC = 0.8430** 🏆
+* **Random Forest Classifier (Tuned):** Test Accuracy = 93.05%, Test Precision = 0.9624, Test ROC-AUC = 0.8319 (`n_estimators=1000`, `max_features=7`, `max_depth=None`)
 
+
+* **XGBoost Classifier (Best Model):** Fine-tuned via `RandomizedSearchCV` (`n_estimators=200`, `max_depth=12`, `learning_rate=0.1`, `colsample_bytree=1`), yielding Test Accuracy = 95.09%, Test Precision = 0.9554, Test Recall = 0.7853, Test F1-Score = 0.9490, and Test ROC-AUC = 0.8882 🏆
 
 
 ---
@@ -151,15 +155,11 @@ This repository contains practical implementations and benchmark experiments for
 
 * **Language:** Python 3.8+
 
-
 * **Data Processing:** Pandas, NumPy
-
 
 * **Visualization:** Matplotlib, Seaborn, Plotly Express
 
-
-* **Machine Learning & Pipeline:** Scikit-Learn (`LinearRegression`, `Lasso`, `Ridge`, `LogisticRegression`, `SVC`, `KNeighborsRegressor`, `DecisionTreeRegressor`, `DecisionTreeClassifier`, `RandomForestRegressor`, `RandomForestClassifier`, `AdaBoostRegressor`, `AdaBoostClassifier`, `GradientBoostingClassifier`, `ColumnTransformer`, `StandardScaler`, `OneHotEncoder`, `LabelEncoder`, `GridSearchCV`, `RandomizedSearchCV`)
-
+* **Machine Learning & Pipeline:** Scikit-Learn (`LinearRegression`, `Lasso`, `Ridge`, `LogisticRegression`, `SVC`, `KNeighborsRegressor`, `DecisionTreeRegressor`, `DecisionTreeClassifier`, `RandomForestRegressor`, `RandomForestClassifier`, `AdaBoostRegressor`, `AdaBoostClassifier`, `GradientBoostingRegressor`, `GradientBoostingClassifier`, `ColumnTransformer`, `StandardScaler`, `OneHotEncoder`, `LabelEncoder`, `GridSearchCV`, `RandomizedSearchCV`), XGBoost (`XGBRegressor`, `XGBClassifier`)
 
 
 ---
@@ -175,8 +175,8 @@ This repository contains practical implementations and benchmark experiments for
 │   └── Travel.csv                              # Holiday Package Purchase Prediction Dataset
 ├── Simple_And_Multiple_Linear_Regression.ipynb # Notebook for Regression Experiments
 ├── Social_Network_Ads_Classification.ipynb     # Notebook for Classification Experiments
-├── Used_Car_Price_Prediction.ipynb             # Notebook for Car Price Regression (Random Forest & KNN)
-├── Holiday_Package_Prediction.ipynb            # Notebook for Tourism Package Classification (Ensemble Methods)
+├── Used_Car_Price_Prediction.ipynb             # Notebook for Car Price Regression (Ensemble & XGBoost)
+├── Holiday_Package_Prediction.ipynb            # Notebook for Tourism Package Classification (Ensemble & XGBoost)
 └── README.md                                   # Project documentation
 
 ```
